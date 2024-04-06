@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+//****** User ******/
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @db.VarChar(255)
+  password  String   @db.VarChar(255)
+  firstName String   @db.VarChar(255)
+  lastName  String   @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// //****** ActivationToken ******/
+
+// enum TokenStatus {
+//   Active
+//   Deleted
+// }
+
+// model ActivationToken {
+//   id        Int         @id @default(autoincrement())
+//   token     String      @unique @default(uuid())
+//   user      User        @relation(fields: [userId], references: [id])
+//   userId    Int
+//   status    TokenStatus @default(Active)
+//   createdAt DateTime    @default(now())
+//   updatedAt DateTime    @updatedAt
+// }
+
+// //****** RefreshToken ******/
+
+// model RefreshToken {
+//   id        Int         @id @default(autoincrement())
+//   token     String      @unique @default(uuid())
+//   user      User        @relation(fields: [userId], references: [id])
+//   userId    Int
+//   ip        String      @default("") @db.VarChar(50)
+//   userAgent String      @default("") @db.Text
+//   status    TokenStatus @default(Active)
+//   createdAt DateTime    @default(now())
+//   updatedAt DateTime    @updatedAt
+// }
+
+// //****** Teachers ******/
+
+// model Teachers {
+//   id               Int                @id @default(autoincrement())
+//   firstName        String             @db.VarChar(255)
+//   lastName         String             @db.VarChar(255)
+//   subject          Subjects[]
+//   createdAt        DateTime           @default(now())
+//   updatedAt        DateTime           @updatedAt
+//   teachersSubjects TeachersSubjects[]
+// }
+
+// //****** Pupils ******/
+
+// model Pupils {
+//   id             Int              @id @default(autoincrement())
+//   firstName      String           @db.VarChar(255)
+//   lastName       String           @db.VarChar(255)
+//   subject        Subjects[]
+//   pupilsSubjects PupilsSubjects[]
+//   createdAt      DateTime         @default(now())
+//   updatedAt      DateTime         @updatedAt
+// }
+
+// //****** Subjects ******/
+
+// model Subjects {
+//   id               Int                @id @default(autoincrement())
+//   name             String             @db.VarChar(255)
+//   teachers         Teachers?          @relation(fields: [teachersId], references: [id])
+//   teachersId       Int?
+//   pupils           Pupils?            @relation(fields: [pupilsId], references: [id])
+//   pupilsId         Int?
+//   teachersSubjects TeachersSubjects[]
+//   tupilsSubjects   PupilsSubjects[]
+//   createdAt        DateTime           @default(now())
+//   updatedAt        DateTime           @updatedAt
+// }
+
+// model TeachersSubjects {
+//   teacher   Teachers @relation(fields: [teacherId], references: [id])
+//   teacherId Int
+//   subjects  Subjects @relation(fields: [subjectId], references: [id])
+//   subjectId Int
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+
+//   @@id([teacherId, subjectId])
+// }
+
+// model PupilsSubjects {
+//   pupils    Pupils   @relation(fields: [pupilId], references: [id])
+//   pupilId   Int
+//   subjects  Subjects @relation(fields: [subjectId], references: [id])
+//   subjectId Int
+//   grade     Int      @default(0)
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+
+//   @@id([pupilId, subjectId])
+// }

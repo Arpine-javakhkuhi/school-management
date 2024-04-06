@@ -1,0 +1,67 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "airbnb-base",
+    "airbnb-typescript/base",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "plugin:prettier/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["@typescript-eslint", "import", "prettier"],
+  "rules": {
+    "quotes": ["error", "single"],
+    "import/prefer-default-export": "off",
+    "consistent-return": "off",
+    "comma-dangle": "off",
+    "no-underscore-dangle": "off",
+    "class-methods-use-this": "off",
+    "no-unused-vars": "off",
+    "default-case": "off",
+    "@typescript-eslint/return-await": "warn",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "import/no-named-as-default": 0,
+    "import/no-duplicates": ["error"],
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "unknown"
+        ],
+        // "pathGroups": [
+        //   {
+        //     "pattern": "react",
+        //     "group": "external",
+        //     "position": "before"
+        //   }
+        // ],
+        // "pathGroupsExcludedImportTypes": ["react"],
+        "newlines-between": "always"
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": "./tsconfig.json"
+      }
+    }
+  },
+  "ignorePatterns": ["node_modules", "dist", "tests"]
+}
