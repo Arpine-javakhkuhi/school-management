@@ -10,7 +10,7 @@ const userSchema = gql`
     getUserById(): User!
   }
 
-  type User {
+  type LoggedUser {
     id: String
     email: String
     firstName: String
@@ -18,7 +18,7 @@ const userSchema = gql`
   }
 
   type Mutation {
-    login(input: LoginInput): User
+    login(input: LoginInput): LoggedUser
   }
 `;
 

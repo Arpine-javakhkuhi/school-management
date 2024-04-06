@@ -1,5 +1,5 @@
 import userSchema from "./user.schema";
-import { userTypeDefs } from "./user.typeDefs.";
+import { userTypeDefs } from "./user.typeDefs";
 
 const schemas = [userSchema, userTypeDefs];
 
