@@ -1,9 +1,20 @@
-export default {
+import { GraphQLError } from "graphql";
+
+const userResolver = {
   Query: {
-    user: () => {},
-    // user: () => {},
+    getUserById: () => {
+      try {
+        return {
+          id: "1",
+          email: "admin@admin.com",
+          firstName: "Test name",
+          lastName: "Test Surname",
+        };
+      } catch (error) {
+        throw new GraphQLError("Test errrrrrrrrrrrrrrrrrrrrorrrrrrrrrrrrrr");
+      }
+    },
   },
-  //   User: {
-  //     teachers: () => {},
-  //   },
 };
+
+export default userResolver;

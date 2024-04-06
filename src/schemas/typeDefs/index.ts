@@ -1,5 +1,6 @@
-import { userTypeDefs } from "./user";
+import userSchema from "./user.schema";
+import { userTypeDefs } from "./user.typeDefs.";
 
-const schemas = [userTypeDefs];
+const schemas = [userSchema, userTypeDefs];
 
 export default schemas;
