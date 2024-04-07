@@ -7,14 +7,15 @@ const userSchema = gql`
   }
 
   type Query {
-    getUserById(): User!
+    getUserById: User!
   }
 
   type LoggedUser {
-    id: String
+    _id: String
     email: String
     firstName: String
     lastName: String
+    accessToken: String!
   }
 
   type Mutation {

@@ -1,4 +1,6 @@
-import { ApolloServer } from "apollo-server";
+import { ApolloServer } from "@apollo/server";
+import { startStandaloneServer } from "@apollo/server/standalone";
+
 // import { expressMiddleware } from '@apollo/server/express4';
 import express from "express";
 // import cors from 'cors';
@@ -10,11 +12,17 @@ import resolvers from "./resolvers";
 const app = express();
 
 // Instance of ApolloServer
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-});
+const main = async () => {
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+  });
 
-server.listen(config.PORT).then(({ url }) => {
+  const { url } = await startStandaloneServer(server, {
+    listen: { port: Number(config.PORT) },
+  });
+
   console.log(`🚀  Server is running at ${url}`);
-});
+};
+
+main();

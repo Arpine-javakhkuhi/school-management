@@ -1,18 +1,18 @@
-# Simply-hiring
+# School management
 
 ## Description
 
-Simply-hiring is an application tool for HR department to organize internships.
+School Management Tool is an application tool for schools to organize learning process.
 
 ## Environment Setup
 
 To run this project, make sure you have the following installed on your system.
 
-| Binaries | Version    |
-| -------- | ---------- | ----- | --- |
-| NodeJS   | ^16.0      |
-| NPM      | ^8.0       |
-| <!--     | PostgreSQL | ^12.0 | --> |
+| Binaries | Version |
+| -------- | ------- |
+| NodeJS   | ^16.0   |
+| NPM      | ^8.0    |
+| MySql    | ^8.0    |
 
 ## Instaletion
 
