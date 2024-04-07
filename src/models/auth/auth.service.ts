@@ -4,8 +4,8 @@ import config from "../../config";
 
 import userModel from "../user/user.model";
 
-import { LoginDto } from "./dto/login.dto";
-import { LoginReturnTypeInterface } from "./auth.interface";
+import { LoginDto } from "../../dtos/login.dto";
+import { LoginReturnTypeInterface } from "../../interfaces/auth.interface";
 
 class AuthService {
   login = async (loginData: LoginDto): Promise<LoginReturnTypeInterface> => {

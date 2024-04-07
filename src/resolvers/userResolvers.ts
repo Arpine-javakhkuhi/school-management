@@ -2,6 +2,8 @@ import { GraphQLError } from "graphql";
 import userModel from "../models/user/user.model";
 import { AdditionalDataInterface } from "./types/user";
 import authService from "../models/auth/auth.service";
+import { LoginDto } from "dtos/login.dto";
+import { LoginInputData } from "interfaces/auth.interface";
 
 const userResolver = {
   Query: {
@@ -20,8 +22,12 @@ const userResolver = {
   },
 
   Mutation: {
-    login: async (_: any, { input }: any, context: any) => {
-      const { user, accessToken } = await authService.login(input);
+    // do I need a context????
+    login: async (_: any, { input: { email, password } }: LoginInputData) => {
+      const { user, accessToken } = await authService.login({
+        email,
+        password,
+      });
 
       return {
         ...user,
