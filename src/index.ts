@@ -1,36 +1,28 @@
-import { ApolloServer } from "apollo-server";
+import { ApolloServer } from "@apollo/server";
+import { startStandaloneServer } from "@apollo/server/standalone";
+
 // import { expressMiddleware } from '@apollo/server/express4';
 import express from "express";
 // import cors from 'cors';
 
 import config from "./config/index";
 import typeDefs from "./schemas/typeDefs";
+import resolvers from "./resolvers";
 
 const app = express();
 
-const resolvers = {
-  User: {
-    users: () => [],
-  },
+// Instance of ApolloServer
+const main = async () => {
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+  });
+
+  const { url } = await startStandaloneServer(server, {
+    listen: { port: Number(config.PORT) },
+  });
+
+  console.log(`🚀  Server is running at ${url}`);
 };
 
-// Instance of ApolloServer
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-});
-
-server.listen(config.PORT).then(({ url }) => {
-  console.log(`🚀  Server is running at ${url}`);
-});
-
-// const server = new ApolloServer({
-//   typeDefs,
-//   resolvers,
-// });
-// // Note you must call `start()` on the `ApolloServer`
-// // instance before passing the instance to `expressMiddleware`
-// await server.start();
-
-// // Specify the path where we'd like to mount our server
-// app.use('/graphql', cors<cors.CorsRequest>(), express.json(), expressMiddleware(server));
+main();
