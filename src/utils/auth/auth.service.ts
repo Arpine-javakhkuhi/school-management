@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { GraphQLError } from "graphql";
 
-import userModel from "../user/user.model";
+import userModel from "../../models/user.model";
 import config from "../../config";
 import { LoginReturnTypeInterface } from "../../interfaces/auth.interface";
 import errorMessages from "../../constants/errorMessages";

@@ -4,8 +4,8 @@ import { GraphQLError } from "graphql";
 
 import { AuthRequest, HTTPStatus } from "../types/main.types";
 import errorMessages from "../constants/errorMessages";
-import userModel from "../models/user/user.model";
-import authService from "../models/auth/auth.service";
+import userModel from "../models/user.model";
+import authService from "../utils/auth/auth.service";
 import validationRules from "../utils/validation/validationRules";
 
 const getAccessToken = (req: AuthRequest): string => {

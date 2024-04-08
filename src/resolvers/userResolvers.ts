@@ -1,6 +1,6 @@
 import { GraphQLError } from "graphql";
 
-import authService from "../models/auth/auth.service";
+import authService from "../utils/auth/auth.service";
 import { LoginInputData } from "../interfaces/auth.interface";
 
 import { ContextValue } from "./types";
