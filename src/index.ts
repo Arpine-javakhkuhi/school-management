@@ -1,30 +1,50 @@
 import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from "@apollo/server/standalone";
-
-// import { expressMiddleware } from '@apollo/server/express4';
 import express from "express";
-// import cors from 'cors';
+import { expressMiddleware } from "@apollo/server/express4";
+import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
+import cors from "cors";
+import { User } from "@prisma/client";
 
 import config from "./config/index";
 import typeDefs from "./schemas/typeDefs";
 import resolvers from "./resolvers";
 import context from "./context";
 
+import http from "http";
+
 const app = express();
+const httpServer = http.createServer(app);
+
+interface AppContext {
+  user?: User;
+}
 
 const main = async () => {
-  // Instance of ApolloServer
-  const server = new ApolloServer({
+  const server = new ApolloServer<AppContext>({
     typeDefs,
     resolvers,
+    introspection: true,
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
 
-  const { url } = await startStandaloneServer(server, {
-    listen: { port: Number(config.PORT) },
-    context: context,
-  });
+  await server.start();
 
-  console.log(`🚀  Server is running at ${url}`);
+  // Set up our Express middleware to handle CORS, body parsing,
+  // and our expressMiddleware function.
+  app.use(
+    "/",
+    cors<cors.CorsRequest>(),
+    express.json(),
+    expressMiddleware(server, {
+      context,
+    }),
+  );
+
+  await new Promise<void>((resolve) =>
+    httpServer.listen({ port: config.PORT }, resolve),
+  );
+  /* eslint-disable no-console */
+  console.log(`🚀  Server is running at http://localhost:${config.PORT}`);
 };
 
 main();

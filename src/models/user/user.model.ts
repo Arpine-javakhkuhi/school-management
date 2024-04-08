@@ -1,11 +1,11 @@
 import { User } from "@prisma/client";
 import bcrypt from "bcrypt";
+import { GraphQLError } from "graphql";
+
 import prisma from "../../config/prisma";
-import { Exception } from "../../errorHandler/exception";
 import { HTTPStatus } from "../../types/main.types";
 import errorMessages from "../../constants/errorMessages";
 import { UserDTO, UserInterface } from "../../interfaces/user.interface";
-import { GraphQLError } from "graphql";
 
 class UserModel implements UserInterface {
   async getByEmail(email: string): Promise<User | null> {

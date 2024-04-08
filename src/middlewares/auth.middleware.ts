@@ -1,18 +1,21 @@
 import { JwtPayload } from "jsonwebtoken";
 import { User } from "@prisma/client";
+import { GraphQLError } from "graphql";
 
 import { AuthRequest, HTTPStatus } from "../types/main.types";
 import errorMessages from "../constants/errorMessages";
 import userModel from "../models/user/user.model";
 import authService from "../models/auth/auth.service";
 import validationRules from "../utils/validation/validationRules";
-import { GraphQLError } from "graphql";
-import { ServerResponse } from "http";
 
-const getAccessToken = (req: AuthRequest): string | null => {
+const getAccessToken = (req: AuthRequest): string => {
   const { authorization } = req.headers;
   if (!authorization) {
-    return null;
+    throw new GraphQLError(errorMessages.unAuthenticated, {
+      extensions: {
+        code: HTTPStatus.Unauthorized,
+      },
+    });
   }
   // remove Bearer from token
   return authorization.startsWith("Bearer ")
@@ -40,26 +43,12 @@ const getUserByPayload = async (userPayload: JwtPayload): Promise<User> => {
   return user;
 };
 
-const authMiddleware = async (
-  req: AuthRequest,
-  res: ServerResponse
-): Promise<User | null> => {
-  try {
-    const token = getAccessToken(req);
+const authMiddleware = async (req: AuthRequest): Promise<User> => {
+  const token = getAccessToken(req);
 
-    if (token) {
-      const userPayload = await authService.verify(token);
-      return getUserByPayload(userPayload);
-    }
-    return null;
-  } catch (error) {
-    // should again throw?
-    throw new GraphQLError(errorMessages.unAuthenticated, {
-      extensions: {
-        code: HTTPStatus.Unauthorized,
-      },
-    });
-  }
+  const userPayload = await authService.verify(token);
+
+  return getUserByPayload(userPayload);
 };
 
 export default authMiddleware;

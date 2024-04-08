@@ -3,7 +3,6 @@ import { GraphQLError } from "graphql";
 
 import userModel from "../user/user.model";
 import config from "../../config";
-
 import { LoginReturnTypeInterface } from "../../interfaces/auth.interface";
 import errorMessages from "../../constants/errorMessages";
 import { HTTPStatus } from "../../types/main.types";
@@ -13,7 +12,7 @@ class AuthService {
   login = async (loginData: LoginDto): Promise<LoginReturnTypeInterface> => {
     const user = await userModel.getByCredentials(
       loginData.email,
-      loginData.password
+      loginData.password,
     );
 
     const accessToken = await AuthService.createAccessToken(user.id);
@@ -34,7 +33,7 @@ class AuthService {
             return reject(error);
           }
           resolve(token);
-        }
+        },
       );
     });
   }
@@ -50,7 +49,7 @@ class AuthService {
               return reject(error);
             }
             resolve(userPayload as jwt.JwtPayload);
-          }
+          },
         );
       });
     } catch (error) {

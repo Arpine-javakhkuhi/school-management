@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
+
 import Validator from "../utils/validation/validator";
 
 const authValidator = {

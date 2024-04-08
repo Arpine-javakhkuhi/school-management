@@ -1,11 +1,14 @@
 import { GraphQLError } from "graphql";
-import { ContextValue } from "./types";
+
 import authService from "../models/auth/auth.service";
-import { LoginInputData } from "interfaces/auth.interface";
+import { LoginInputData } from "../interfaces/auth.interface";
+
+import { ContextValue } from "./types";
 // import authValidator from "../validators/auth.validators";
 
 const userResolver = {
   Query: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     getUserById: (_: any, s: any, contextValue: ContextValue) => {
       try {
         if (!contextValue.user) {
@@ -24,6 +27,7 @@ const userResolver = {
   },
 
   Mutation: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     login: async (_: any, { input: { email, password } }: LoginInputData) => {
       // await authValidator.login({ email, password });
       const { user, accessToken } = await authService.login({

@@ -1,4 +1,5 @@
-import { LoginDto } from "dtos/login.dto";
+import { LoginDto } from "../dtos/login.dto";
+
 import { UserDTO } from "./user.interface";
 
 export interface LoginReturnTypeInterface {

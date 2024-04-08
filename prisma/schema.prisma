@@ -52,62 +52,49 @@ model User {
 
 // //****** Teachers ******/
 
-// model Teachers {
-//   id               Int                @id @default(autoincrement())
-//   firstName        String             @db.VarChar(255)
-//   lastName         String             @db.VarChar(255)
-//   subject          Subjects[]
-//   createdAt        DateTime           @default(now())
-//   updatedAt        DateTime           @updatedAt
-//   teachersSubjects TeachersSubjects[]
-// }
+model Teachers {
+  id        Int        @id @default(autoincrement())
+  firstName String     @db.VarChar(255)
+  lastName  String     @db.VarChar(255)
+  subjects  Subjects[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
 
-// //****** Pupils ******/
+//****** Pupils ******/
 
-// model Pupils {
-//   id             Int              @id @default(autoincrement())
-//   firstName      String           @db.VarChar(255)
-//   lastName       String           @db.VarChar(255)
-//   subject        Subjects[]
-//   pupilsSubjects PupilsSubjects[]
-//   createdAt      DateTime         @default(now())
-//   updatedAt      DateTime         @updatedAt
-// }
+model Pupils {
+  id             Int              @id @default(autoincrement())
+  firstName      String           @db.VarChar(255)
+  lastName       String           @db.VarChar(255)
+  subject        Subjects[]
+  pupilsSubjects PupilsSubjects[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+}
 
-// //****** Subjects ******/
+//****** Subjects ******/
 
-// model Subjects {
-//   id               Int                @id @default(autoincrement())
-//   name             String             @db.VarChar(255)
-//   teachers         Teachers?          @relation(fields: [teachersId], references: [id])
-//   teachersId       Int?
-//   pupils           Pupils?            @relation(fields: [pupilsId], references: [id])
-//   pupilsId         Int?
-//   teachersSubjects TeachersSubjects[]
-//   tupilsSubjects   PupilsSubjects[]
-//   createdAt        DateTime           @default(now())
-//   updatedAt        DateTime           @updatedAt
-// }
+model Subjects {
+  id             Int              @id @default(autoincrement())
+  name           String           @db.VarChar(255)
+  teacher        Teachers?        @relation(fields: [teacherId], references: [id])
+  teacherId      Int?
+  pupils         Pupils?          @relation(fields: [pupilId], references: [id])
+  pupilId        Int?
+  pupilsSubjects PupilsSubjects[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+}
 
-// model TeachersSubjects {
-//   teacher   Teachers @relation(fields: [teacherId], references: [id])
-//   teacherId Int
-//   subjects  Subjects @relation(fields: [subjectId], references: [id])
-//   subjectId Int
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
+model PupilsSubjects {
+  pupil     Pupils   @relation(fields: [pupilId], references: [id])
+  pupilId   Int
+  subject   Subjects @relation(fields: [subjectId], references: [id])
+  subjectId Int
+  grade     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-//   @@id([teacherId, subjectId])
-// }
-
-// model PupilsSubjects {
-//   pupils    Pupils   @relation(fields: [pupilId], references: [id])
-//   pupilId   Int
-//   subjects  Subjects @relation(fields: [subjectId], references: [id])
-//   subjectId Int
-//   grade     Int      @default(0)
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-
-//   @@id([pupilId, subjectId])
-// }
+  @@id([pupilId, subjectId])
+}

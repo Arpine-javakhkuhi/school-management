@@ -1,7 +1,0 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-# add $PATH:/usr/local/bin in PATH for WebStorm
-export PATH="$PATH:/usr/local/bin"
-
-npx lint-staged run pre-commit

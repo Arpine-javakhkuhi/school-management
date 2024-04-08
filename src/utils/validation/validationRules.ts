@@ -7,7 +7,7 @@ type RuleOptions = {
 
 const setOptions = <T extends Joi.AnySchema>(
   schema: T,
-  options: RuleOptions
+  options: RuleOptions,
 ): T => {
   let newSchema = schema;
   if (options.required) {

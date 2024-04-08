@@ -1,6 +1,8 @@
 import { User } from "@prisma/client";
+
 import { IncomingMessage } from "http";
 
+// eslint-disable-next-line no-shadow
 export enum HTTPStatus {
   OK = 200,
   Created = 201,
