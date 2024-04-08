@@ -1,3 +1,6 @@
+import { User } from "@prisma/client";
+import { IncomingMessage } from "http";
+
 export enum HTTPStatus {
   OK = 200,
   Created = 201,
@@ -7,4 +10,9 @@ export enum HTTPStatus {
   NotFound = 404,
   UnprocessableEntity = 422,
   InternalServerError = 500,
+}
+
+export interface AuthRequest extends IncomingMessage {
+  authorization?: string;
+  user?: User;
 }
