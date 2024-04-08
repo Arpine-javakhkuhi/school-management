@@ -8,11 +8,12 @@ import express from "express";
 import config from "./config/index";
 import typeDefs from "./schemas/typeDefs";
 import resolvers from "./resolvers";
+import context from "./context";
 
 const app = express();
 
-// Instance of ApolloServer
 const main = async () => {
+  // Instance of ApolloServer
   const server = new ApolloServer({
     typeDefs,
     resolvers,
@@ -20,6 +21,7 @@ const main = async () => {
 
   const { url } = await startStandaloneServer(server, {
     listen: { port: Number(config.PORT) },
+    context: context,
   });
 
   console.log(`🚀  Server is running at ${url}`);

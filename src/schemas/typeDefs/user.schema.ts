@@ -11,7 +11,7 @@ const userSchema = gql`
   }
 
   type LoggedUser {
-    _id: String
+    id: String
     email: String
     firstName: String
     lastName: String
