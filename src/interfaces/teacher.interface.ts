@@ -1,4 +1,4 @@
-import { Subjects, Teachers } from "@prisma/client";
+import { Prisma, Subjects, Teachers } from "@prisma/client";
 
 import { TeacherDto } from "../dtos/teacher.dto";
 
@@ -12,6 +12,12 @@ export interface TeacherInterface {
       subjects: TeacherSubjects[];
     } & Teachers)[]
   >;
+
+  getById: (id: number) => Promise<Teachers | null>;
+
+  update: (id: number, data: Prisma.TeachersUpdateInput) => Promise<Teachers>;
+
+  delete: (id: number) => Promise<Prisma.BatchPayload>;
 }
 
 export interface CreateTeacherInputData {

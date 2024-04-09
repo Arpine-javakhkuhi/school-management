@@ -9,7 +9,7 @@ import authService from "../utils/auth.service";
 
 const getAccessToken = (req: AuthRequest): string => {
   const { authorization } = req.headers;
-  console.log("authorization", authorization);
+
   if (!authorization) {
     throw new GraphQLError(errorMessages.unAuthenticated, {
       extensions: {
@@ -17,6 +17,7 @@ const getAccessToken = (req: AuthRequest): string => {
       },
     });
   }
+
   // remove Bearer from token
   return authorization.startsWith("Bearer ")
     ? authorization.slice(7, authorization.length)

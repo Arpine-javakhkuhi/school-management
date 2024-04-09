@@ -1,15 +1,18 @@
 import Joi from "joi";
 import { GraphQLError } from "graphql";
 
-import { HTTPStatus } from "../types/main.types";
-import { TeacherDto } from "../dtos/teacher.dto";
+import { TeacherDto } from "../../dtos/teacher.dto";
+import { HTTPStatus } from "../../types/main.types";
 
 const createTeacherValidator = Joi.object({
   firstName: Joi.string().required().label("E-mail"),
   lastName: Joi.string().required().label("Password"),
+  id: Joi.number().required().label("ID"),
 });
 
-const createTeacherValidation = async (input: TeacherDto): Promise<void> => {
+const editTeacherValidation = async (
+  input: TeacherDto & { id: number }
+): Promise<void> => {
   const { error } = createTeacherValidator.validate(input);
 
   if (error?.details[0]?.message) {
@@ -21,4 +24,4 @@ const createTeacherValidation = async (input: TeacherDto): Promise<void> => {
   }
 };
 
-export default createTeacherValidation;
+export default editTeacherValidation;

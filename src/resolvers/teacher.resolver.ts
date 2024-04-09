@@ -1,8 +1,9 @@
 import SUCCESS_MESSAGES from "../constants/successMessages";
 import { CreateTeacherInputData } from "../interfaces/teacher.interface";
-import teacherModel from "../models/teacher.mode";
-import createTeacherValidation from "../validators/createTeacher.validator";
+import teacherModel from "../models/teacher.model";
+import createTeacherValidation from "../validators/teacher/createTeacher.validator";
 import checkIfExists from "../utils/teacher.service";
+import editTeacherValidation from "../validators/teacher/editTeacher.validator";
 
 const teacherResolver = {
   Query: {
@@ -18,7 +19,6 @@ const teacherResolver = {
       _: unknown,
       { createTeacherInput }: CreateTeacherInputData
     ) => {
-      console.log("input createTeacher", createTeacherInput);
       await createTeacherValidation(createTeacherInput);
 
       const teacher = await teacherModel.create(createTeacherInput);
@@ -26,11 +26,10 @@ const teacherResolver = {
     },
 
     deleteTeacher: async (_, { id }) => {
-      console.log("id deleteTeacher", id);
       await checkIfExists(+id);
 
       const { count } = await teacherModel.delete(+id);
-      console.log("count deleteTeacher", count);
+
       return {
         isSuccess: !!count,
         message: SUCCESS_MESSAGES.teacherSuccessfullyDeleted,
@@ -41,8 +40,7 @@ const teacherResolver = {
       _,
       { id, editTeacherInput: { firstName, lastName } }
     ) => {
-      console.log("id editTeacher", id);
-      console.log("firstName", firstName);
+      await editTeacherValidation({ ...{ firstName, lastName }, id });
       await checkIfExists(+id);
 
       const newTeacher = await teacherModel.update(+id, {
