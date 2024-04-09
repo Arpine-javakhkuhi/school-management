@@ -47,10 +47,3 @@ To deploy migratoin to database use the following command:
 ```
 npm run db-deploy
 ```
-
-## Log in
-
-It was created a super user.
-Super User credentials:
-email - admin@admin.com
-password - Admin1234!

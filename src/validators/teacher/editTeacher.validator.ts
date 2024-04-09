@@ -11,7 +11,7 @@ const createTeacherValidator = Joi.object({
 });
 
 const editTeacherValidation = async (
-  input: TeacherDto & { id: number }
+  input: TeacherDto & { id: number },
 ): Promise<void> => {
   const { error } = createTeacherValidator.validate(input);
 

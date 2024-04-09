@@ -6,11 +6,11 @@ import { CreateSubjectInput } from "../../interfaces/subject.interface";
 
 const createSubjectValidator = Joi.object({
   name: Joi.string().trim().required().label("Subject name"),
-  teacherId: Joi.string().optional(),
+  teacherId: Joi.string().trim().optional(),
 });
 
 const createSubjectValidation = async (
-  input: CreateSubjectInput
+  input: CreateSubjectInput,
 ): Promise<void> => {
   const { error } = createSubjectValidator.validate(input);
 

@@ -33,7 +33,7 @@ class TeacherModel implements TeacherInterface {
         },
       },
       orderBy: {
-        updatedAt: "desc",
+        lastName: "asc",
       },
     });
   }

@@ -1,6 +1,9 @@
 import subjectModel from "../models/subject.model";
 import teacherModel from "../models/teacher.model";
 import createSubjectValidation from "../validators/subject/createSubject.validator";
+import checkIfExists from "../utils/teacher.service";
+import SUCCESS_MESSAGES from "../constants/successMessages";
+import ERROR_MESSAGES from "../constants/errorMessages";
 
 const subjectResolver = {
   Query: {
@@ -15,7 +18,7 @@ const subjectResolver = {
       await createSubjectValidation(createSubjectInput);
 
       if (createSubjectInput.teacherId) {
-        await teacherModel.getById(+createSubjectInput.teacherId);
+        await checkIfExists(+createSubjectInput.teacherId);
       }
 
       const teacher = await subjectModel.create(createSubjectInput);
@@ -23,16 +26,17 @@ const subjectResolver = {
       return teacher;
     },
 
-    //   deleteTeacher: async (_, { id }) => {
-    //     await checkIfExists(+id);
+    deleteSubject: async (_, { id }) => {
+      const { count } = await teacherModel.delete(+id);
+      const responseMessage = count
+        ? ERROR_MESSAGES.failedToDeleteSubject
+        : SUCCESS_MESSAGES.subjectSuccessfullyDeleted;
 
-    //     const { count } = await teacherModel.delete(+id);
-
-    //     return {
-    //       isSuccess: !!count,
-    //       message: SUCCESS_MESSAGES.teacherSuccessfullyDeleted,
-    //     };
-    //   },
+      return {
+        isSuccess: !!count,
+        message: responseMessage,
+      };
+    },
 
     //   editTeacher: async (
     //     _,

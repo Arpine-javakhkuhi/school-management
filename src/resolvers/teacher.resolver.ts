@@ -4,6 +4,7 @@ import teacherModel from "../models/teacher.model";
 import createTeacherValidation from "../validators/teacher/createTeacher.validator";
 import checkIfExists from "../utils/teacher.service";
 import editTeacherValidation from "../validators/teacher/editTeacher.validator";
+import ERROR_MESSAGES from "../constants/errorMessages";
 
 const teacherResolver = {
   Query: {
@@ -17,7 +18,7 @@ const teacherResolver = {
   Mutation: {
     createTeacher: async (
       _: unknown,
-      { createTeacherInput }: CreateTeacherInputData
+      { createTeacherInput }: CreateTeacherInputData,
     ) => {
       await createTeacherValidation(createTeacherInput);
 
@@ -26,19 +27,21 @@ const teacherResolver = {
     },
 
     deleteTeacher: async (_, { id }) => {
-      await checkIfExists(+id);
-
       const { count } = await teacherModel.delete(+id);
+
+      const responseMessage = count
+        ? ERROR_MESSAGES.failedToDeleteTeacher
+        : SUCCESS_MESSAGES.teacherSuccessfullyDeleted;
 
       return {
         isSuccess: !!count,
-        message: SUCCESS_MESSAGES.teacherSuccessfullyDeleted,
+        message: responseMessage,
       };
     },
 
     editTeacher: async (
       _,
-      { id, editTeacherInput: { firstName, lastName } }
+      { id, editTeacherInput: { firstName, lastName } },
     ) => {
       await editTeacherValidation({ ...{ firstName, lastName }, id });
       await checkIfExists(+id);
