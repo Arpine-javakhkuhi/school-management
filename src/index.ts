@@ -42,6 +42,7 @@ const main = async () => {
   await new Promise<void>((resolve) =>
     httpServer.listen({ port: config.PORT }, resolve),
   );
+
   /* eslint-disable no-console */
   console.log(`🚀  Server is running at http://localhost:${config.PORT}`);
 };

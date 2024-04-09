@@ -5,7 +5,7 @@ import { HTTPStatus } from "../types/main.types";
 import { LoginDto } from "../dtos/login.dto";
 
 const authValidator = Joi.object({
-  email: Joi.string().required().label("E-mail"),
+  email: Joi.string().required().email().label("E-mail"),
   password: Joi.string().required().label("Password"),
 });
 

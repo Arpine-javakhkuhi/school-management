@@ -4,6 +4,7 @@ import checkIfExists from "../utils/teacher.service";
 import SUCCESS_MESSAGES from "../constants/successMessages";
 import ERROR_MESSAGES from "../constants/errorMessages";
 import checkIfSubjectExists from "../utils/subject.service";
+import editSubjectValidation from "../validators/subject/editSubject.validator";
 
 const subjectResolver = {
   Query: {
@@ -40,6 +41,7 @@ const subjectResolver = {
     },
 
     editSubject: async (_, { id, editSubjectInput }) => {
+      await editSubjectValidation(editSubjectInput);
       await checkIfSubjectExists(+id);
 
       const newSubject = await subjectModel.update(+id, editSubjectInput);
