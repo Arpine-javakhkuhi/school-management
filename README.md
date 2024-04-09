@@ -14,7 +14,7 @@ To run this project, make sure you have the following installed on your system.
 | NPM      | ^8.0    |
 | MySql    | ^8.0    |
 
-## Instaletion
+## Installation
 
 Run following command for installing all the dependencies locally.
 
@@ -47,3 +47,10 @@ To deploy migratoin to database use the following command:
 ```
 npm run db-deploy
 ```
+
+## Log in
+
+It was created a super user.
+Super User credentials:
+email - admin@admin.com
+password - Admin1234!

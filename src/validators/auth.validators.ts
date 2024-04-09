@@ -1,17 +1,24 @@
-import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
+import { GraphQLError } from "graphql";
 
-import Validator from "../utils/validation/validator";
+import { HTTPStatus } from "../types/main.types";
+import { LoginDto } from "../dtos/login.dto";
 
-const authValidator = {
-  login(req: Request, res: Response, next: NextFunction) {
-    const validator = new Validator({
-      email: Joi.string().required().label("E-mail"),
-      password: Joi.string().required().label("Password"),
+const authValidator = Joi.object({
+  email: Joi.string().required().label("E-mail"),
+  password: Joi.string().required().label("Password"),
+});
+
+const loginValidation = async (input: LoginDto): Promise<void> => {
+  const { error } = authValidator.validate(input);
+
+  if (error?.details[0]?.message) {
+    throw new GraphQLError(error?.details[0]?.message, {
+      extensions: {
+        code: HTTPStatus.BadRequest,
+      },
     });
-    validator.validate(req.body);
-    next();
-  },
+  }
 };
 
-export default authValidator;
+export default loginValidation;

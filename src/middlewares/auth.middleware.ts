@@ -5,11 +5,11 @@ import { GraphQLError } from "graphql";
 import { AuthRequest, HTTPStatus } from "../types/main.types";
 import errorMessages from "../constants/errorMessages";
 import userModel from "../models/user.model";
-import authService from "../utils/auth/auth.service";
-import validationRules from "../utils/validation/validationRules";
+import authService from "../utils/auth.service";
 
 const getAccessToken = (req: AuthRequest): string => {
   const { authorization } = req.headers;
+  console.log("authorization", authorization);
   if (!authorization) {
     throw new GraphQLError(errorMessages.unAuthenticated, {
       extensions: {
@@ -24,7 +24,7 @@ const getAccessToken = (req: AuthRequest): string => {
 };
 
 const getUserByPayload = async (userPayload: JwtPayload): Promise<User> => {
-  if (!userPayload.id || validationRules.id().validate(userPayload.id).error) {
+  if (!userPayload.id) {
     throw new GraphQLError(errorMessages.unAuthenticated, {
       extensions: {
         code: HTTPStatus.Unauthorized,

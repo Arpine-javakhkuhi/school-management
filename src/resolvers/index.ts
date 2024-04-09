@@ -1,3 +1,4 @@
-import userResolver from "./userResolvers";
+import teacherResolver from "./teacher.resolver";
+import userResolver from "./user.resolvers";
 
-export default [userResolver];
+export default [userResolver, teacherResolver];

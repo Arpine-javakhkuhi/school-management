@@ -6,7 +6,7 @@ import cors from "cors";
 import { User } from "@prisma/client";
 
 import config from "./config/index";
-import typeDefs from "./schemas/typeDefs";
+import typeDefs from "./schemas";
 import resolvers from "./resolvers";
 import context from "./context";
 
@@ -16,7 +16,7 @@ const app = express();
 const httpServer = http.createServer(app);
 
 interface AppContext {
-  user?: User;
+  userId?: number;
 }
 
 const main = async () => {

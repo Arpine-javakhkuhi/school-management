@@ -16,7 +16,8 @@ class UserModel implements UserInterface {
     });
   }
 
-  async getByCredentials(email: string, password: string): Promise<User> {
+  async getByCredentials(loginData): Promise<User> {
+    const { email, password } = loginData;
     const user = await this.getByEmail(email);
 
     if (!user || !(await bcrypt.compare(password, user.password))) {

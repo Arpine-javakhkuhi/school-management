@@ -1,19 +1,16 @@
 import jwt from "jsonwebtoken";
 import { GraphQLError } from "graphql";
 
-import userModel from "../../models/user.model";
-import config from "../../config";
-import { LoginReturnTypeInterface } from "../../interfaces/auth.interface";
-import errorMessages from "../../constants/errorMessages";
-import { HTTPStatus } from "../../types/main.types";
-import { LoginDto } from "../../dtos/login.dto";
+import userModel from "../models/user.model";
+import config from "../config";
+import { LoginReturnTypeInterface } from "../interfaces/auth.interface";
+import errorMessages from "../constants/errorMessages";
+import { HTTPStatus } from "../types/main.types";
+import { LoginDto } from "../dtos/login.dto";
 
 class AuthService {
   login = async (loginData: LoginDto): Promise<LoginReturnTypeInterface> => {
-    const user = await userModel.getByCredentials(
-      loginData.email,
-      loginData.password,
-    );
+    const user = await userModel.getByCredentials(loginData);
 
     const accessToken = await AuthService.createAccessToken(user.id);
 
@@ -48,6 +45,7 @@ class AuthService {
             if (error) {
               return reject(error);
             }
+
             resolve(userPayload as jwt.JwtPayload);
           },
         );
