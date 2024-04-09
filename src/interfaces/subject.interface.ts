@@ -1,7 +1,5 @@
 import { Prisma, Subjects, Teachers } from "@prisma/client";
 
-// import { TeacherDto } from "../dtos/teacher.dto";
-
 export type SubjectsTeacher = Pick<Teachers, "id" | "firstName" | "lastName">;
 
 export interface CreateSubjectInput {
@@ -12,19 +10,15 @@ export interface CreateSubjectInput {
 export interface SubjectInterface {
   create: (subjectData: CreateSubjectInput) => Promise<Subjects | undefined>;
 
-  //   findAll: () => Promise<
-  //     ({
-  //       teacher: TeacherSubjects[];
-  //     } & Subjects)[]
-  //   >;
+  findAll: () => Promise<
+    ({
+      teacher: SubjectsTeacher | null;
+    } & Subjects)[]
+  >;
 
-  //   getById: (id: number) => Promise<Subjects | null>;
+  getById: (id: number) => Promise<Subjects | null>;
 
-  //   update: (id: number, data: Prisma.TeachersUpdateInput) => Promise<Subjects>;
+  update: (id: number, data: CreateSubjectInput) => Promise<Subjects>;
 
-  //   delete: (id: number) => Promise<Prisma.BatchPayload>;
+  delete: (id: number) => Promise<Prisma.BatchPayload>;
 }
-
-// export interface CreateTeacherInputData {
-//   createTeacherInput: TeacherDto;
-// }

@@ -18,7 +18,7 @@ const subjectSchema = gql`
   type Mutation {
     createSubject(createSubjectInput: SubjectInput): Subject!
     deleteSubject(id: ID!): SubjectSuccess
-    editSubject(id: ID!, editSubjectInput: TeacherInput): SubjectSuccess
+    editSubject(id: ID!, editSubjectInput: SubjectInput): SubjectSuccess
   }
 `;
 

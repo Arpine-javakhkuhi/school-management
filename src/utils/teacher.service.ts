@@ -4,7 +4,7 @@ import teacherModel from "../models/teacher.model";
 import errorMessages from "../constants/errorMessages";
 import { HTTPStatus } from "../types/main.types";
 
-const checkIfExists = async (id: number) => {
+const checkIfTeacherExists = async (id: number) => {
   const teacher = await teacherModel.getById(id);
 
   if (!teacher) {
@@ -16,4 +16,4 @@ const checkIfExists = async (id: number) => {
   }
 };
 
-export default checkIfExists;
+export default checkIfTeacherExists;

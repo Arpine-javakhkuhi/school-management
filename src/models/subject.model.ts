@@ -1,5 +1,4 @@
-import { Prisma, Subjects, Teachers } from "@prisma/client";
-import { GraphQLError } from "graphql";
+import { Prisma, Subjects } from "@prisma/client";
 
 import {
   CreateSubjectInput,
@@ -42,8 +41,6 @@ class SubjectModel implements SubjectInterface {
       },
     });
 
-    console.log("subjects", subjects);
-
     return subjects;
   }
 
@@ -55,27 +52,27 @@ class SubjectModel implements SubjectInterface {
     });
   }
 
-  //   async update(
-  //     id: number,
-  //     data: Prisma.TeachersUpdateInput
-  //   ): Promise<Teachers> {
-  //     const updatedData = { ...data };
+  async update(id: number, data: CreateSubjectInput): Promise<Subjects> {
+    const updatedData: CreateSubjectInput = { name: data.name };
+    if (data.teacherId) {
+      updatedData.teacherId = +data.teacherId;
+    }
 
-  //     return prisma.teachers.update({
-  //       where: {
-  //         id,
-  //       },
-  //       data: updatedData,
-  //     });
-  //   }
+    return prisma.subjects.update({
+      where: {
+        id,
+      },
+      data: updatedData,
+    });
+  }
 
-  //   async delete(id: number): Promise<Prisma.BatchPayload> {
-  //     return prisma.teachers.deleteMany({
-  //       where: {
-  //         id,
-  //       },
-  //     });
-  //   }
+  async delete(id: number): Promise<Prisma.BatchPayload> {
+    return prisma.subjects.deleteMany({
+      where: {
+        id,
+      },
+    });
+  }
 }
 const subjectModel = new SubjectModel();
 export default subjectModel;
