@@ -51,7 +51,7 @@ class TeacherModel implements TeacherInterface {
 
   async update(
     id: number,
-    data: Prisma.TeachersUpdateInput,
+    data: Prisma.TeachersUpdateInput
   ): Promise<Teachers> {
     const updatedData = { ...data };
 
