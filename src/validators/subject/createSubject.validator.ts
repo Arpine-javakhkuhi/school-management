@@ -6,7 +6,7 @@ import { CreateSubjectInput } from "../../interfaces/subject.interface";
 
 const createSubjectValidator = Joi.object({
   name: Joi.string().trim().required().label("Subject name"),
-  teacherId: Joi.string().trim().optional(),
+  teacherId: Joi.string().optional().label("Teacher ID"),
 });
 
 const createSubjectValidation = async (

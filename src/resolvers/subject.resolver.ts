@@ -41,7 +41,7 @@ const subjectResolver = {
     },
 
     editSubject: async (_, { id, editSubjectInput }) => {
-      await editSubjectValidation(editSubjectInput);
+      await editSubjectValidation({ ...editSubjectInput, id: +id });
       await checkIfSubjectExists(+id);
 
       const newSubject = await subjectModel.update(+id, editSubjectInput);

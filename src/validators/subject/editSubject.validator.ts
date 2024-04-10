@@ -6,7 +6,7 @@ import { CreateSubjectInput } from "../../interfaces/subject.interface";
 
 const editSubjectValidator = Joi.object({
   name: Joi.string().trim().required().label("Subject name"),
-  teacherId: Joi.string().trim().optional(),
+  teacherId: Joi.string().optional().label("Teacher ID"),
   id: Joi.number().required().label("ID"),
 });
 
